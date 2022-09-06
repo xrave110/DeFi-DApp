@@ -22,7 +22,7 @@ contract Exchange is ERC20 {
         uint256 ethBalance = address(this).balance;
         uint256 cryptoDevTokenReserve = getReserve();
         ERC20 cryptoDevToken = ERC20(cryptoDevTokenAddress);
-        if (getReserve() == 0) {
+        if (cryptoDevTokenReserve == 0) {
             /* liquidity == ethBalance == msg.value */
             cryptoDevToken.transferFrom(msg.sender, address(this), _amount);
             liquidity = ethBalance;

@@ -12,13 +12,19 @@ import {
 export const getEtherBalance = async (
     provider,
     address,
+    contract = false
 ) => {
     try {
         // If the caller has set the `contract` boolean to true, retrieve the balance of
         // ether in the `exchange contract`, if it is set to false, retrieve the balance
         // of the user's address
-        const balance = await provider.getBalance(address);
-        return balance;
+        if (contract) {
+            const balance = await provider.getBalance(EXCHANGE_CONTRACT_ADDRESS);
+            return balance;
+        } else {
+            const balance = await provider.getBalance(address);
+            return balance;
+        }
     } catch (err) {
         console.error(err);
         return 0;
@@ -65,7 +71,7 @@ export const getLPTokensBalance = async (provider, address) => {
  * getReserveOfCDTokens: Retrieves the amount of CD tokens in the
  * exchange contract address
  */
-export const getReserveOfTokens = async (provider) => {
+export const getReserveOfCDTokens = async (provider) => {
     try {
         const exchangeContract = new Contract(
             EXCHANGE_CONTRACT_ADDRESS,
